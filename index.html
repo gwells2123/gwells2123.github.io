@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Stock Price Tracker</title>
+</head>
+<body>
+    <h1> Hello World</h1>
+</body> I am going to jump off fenn Tower today. 
+<img src="C:\Users\gwell\OneDrive\Pictures\Carlos and his bakery.jfif">
+<h2>stock: INTC<h2></h2>
+</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stock Price</title>
+</head>
+<body>
+    <h1>Live Stock Price</h1>
+    <div id="stock-price">
+    <h1>id</h1>
+
+    <script>
+        // Function to fetch data from Google Sheet
+        function fetchStockPrice() {
+            var url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDhSxjpOynciyEvDY7wFgUnQgreggl7pYijyjEsPopwj86vM6Yh81JZMhjeBOAxpEKGqJcQV51YvKw/pubhtml';
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        // Get the value of cell A1
+                        var stockPrice = data.feed.entry[1].gs$cell.$t;
+                        // Display the stock price on the webpage
+                        displayStockPrice(stockPrice);
+                    } else {
+                        console.error('Error fetching data: ' + xhr.status);
+                    }
+                }
+            };
+            xhr.open('GET', url, true);
+            xhr.send();
+        }
+
+        // Function to display stock price on the webpage
+        function displayStockPrice(stockPrice) {
+            var stockPriceDiv = document.getElementById('stock-price');
+            stockPriceDiv.textContent = 'Stock Price: ' + stockPrice;
+        }
+
+        // Fetch data initially
+        fetchStockPrice();
+        // Fetch data periodically, e.g., every 5 seconds
+        setInterval(fetchStockPrice, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+</body>
+</html>
